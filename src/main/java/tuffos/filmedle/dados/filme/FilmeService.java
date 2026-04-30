@@ -7,7 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import tuffos.filmedle.dados.filme.dto.ResponseFilmeDTO;
 
 @Service
-public class FIlmeService {
+public class FilmeService {
 
     @Autowired
     private FilmeRepository filmeRepository;

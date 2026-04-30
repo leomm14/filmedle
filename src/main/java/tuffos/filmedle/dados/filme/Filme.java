@@ -1,5 +1,6 @@
 package tuffos.filmedle.dados.filme;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import tuffos.filmedle.dados.Pais.Pais;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,11 +27,16 @@ public class Filme {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-    private String pais;
+    @ManyToMany
+    @JoinTable(
+            name = "filme_pais",
+            joinColumns = @JoinColumn(name = "id_filme"),
+            inverseJoinColumns = @JoinColumn(name = "id_pais")
+    )
+    private List<Pais> paises;
 
     @Column(nullable = false)
-    private String genero;
+    private String[] genero;
 
     @Column(nullable = false)
     private Integer lancamento;
@@ -45,9 +53,6 @@ public class Filme {
     @Column(nullable = false)
     private String diretor;
 
-    @CreationTimestamp
-    private LocalDateTime dataCriacao;
-
-    @UpdateTimestamp
-    private LocalDateTime dataAtualizacao;
+    @Column(nullable = false)
+    private String[] keywords;
 }
