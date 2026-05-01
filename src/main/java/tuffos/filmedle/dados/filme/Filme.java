@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import tuffos.filmedle.dados.Pais.Pais;
+import tuffos.filmedle.mecanicas.Palpite.Palpite;
+import tuffos.filmedle.mecanicas.Partida.Partida;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,4 +57,12 @@ public class Filme {
 
     @Column(nullable = false)
     private String[] keywords;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "filme")
+    private List<Palpite> palpites;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "filme")
+    private List<Partida> partidas;
 }

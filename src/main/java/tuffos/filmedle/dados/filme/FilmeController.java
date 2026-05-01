@@ -12,9 +12,9 @@ import tuffos.filmedle.dados.filme.dto.ResponseFilmeDTO;
 public class FilmeController {
 
     @Autowired
-    private FilmeService fIlmeService;
+    private FilmeService filmeService;
 
     @GetMapping("/{id}")
-    public ResponseFilmeDTO getFilme(@PathVariable Integer id) {return fIlmeService.getDTO(id);}
+    public ResponseFilmeDTO getFilme(@PathVariable Integer id) {return filmeService.getDTO(id);}
 
 }
