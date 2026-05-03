@@ -11,6 +11,7 @@ import tuffos.filmedle.dados.filme.Filme;
 import tuffos.filmedle.mecanicas.Palpite.Palpite;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,7 +30,7 @@ public class Partida {
     private Filme filme;
 
     @OneToMany(mappedBy = "partida")
-    private List<Palpite> palpites;
+    private List<Palpite> palpites= new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime dataCriacao;

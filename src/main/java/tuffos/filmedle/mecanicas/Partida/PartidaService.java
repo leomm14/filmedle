@@ -33,7 +33,6 @@ public class PartidaService {
 
     }
 
-
     public ResponsePartidaDTO criar(Integer idFilme) {
         Partida partida = new Partida();
         partida.setFilme(filmeService.get(idFilme));
@@ -41,11 +40,27 @@ public class PartidaService {
         return ResponsePartidaDTO.toDTO(partidaRepository.save(partida));
     }
 
-
     public Partida get(Integer id)  {
         return partidaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Partida não encontrado"));
     }
     public ResponsePartidaDTO getDTO(Integer id) {return ResponsePartidaDTO.toDTO(get(id));}
+
+    public ResponsePartidaDTO inicia() {
+        Partida partida = new Partida();
+        partida.setFilme(filmeService.getAleatorio());
+        partida = partidaRepository.save(partida);
+        return ResponsePartidaDTO.toDTO(partida);
+    }
+
+    public String[] dica(Integer id) {
+        Partida partida = get(id);
+
+        if (partida.getPalpites().size() >= 5) {
+            return partida.getFilme().getKeywords();
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "A partida não tem pelo menos 5 palpites");
+        }
+    }
 
 }
