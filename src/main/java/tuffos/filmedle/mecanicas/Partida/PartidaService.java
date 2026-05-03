@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import tuffos.filmedle.dados.filme.FilmeService;
 import tuffos.filmedle.mecanicas.Palpite.Palpite;
 import tuffos.filmedle.mecanicas.Palpite.PalpiteService;
 import tuffos.filmedle.mecanicas.Partida.dto.ResponsePartidaDTO;
+
+import java.util.ArrayList;
 
 @Service
 public class PartidaService {
@@ -15,6 +18,8 @@ public class PartidaService {
     private PartidaRepository partidaRepository;
     @Autowired
     private PalpiteService palpiteService;
+    @Autowired
+    private FilmeService filmeService;
 
     public ResponsePartidaDTO chute(Integer idPartida, Integer idChute) {
 
@@ -26,6 +31,14 @@ public class PartidaService {
         partidaRepository.save(partida);
         return ResponsePartidaDTO.toDTO(partida);
 
+    }
+
+
+    public ResponsePartidaDTO criar(Integer idFilme) {
+        Partida partida = new Partida();
+        partida.setFilme(filmeService.get(idFilme));
+        partida.setPalpites(new ArrayList<>());
+        return ResponsePartidaDTO.toDTO(partidaRepository.save(partida));
     }
 
 
