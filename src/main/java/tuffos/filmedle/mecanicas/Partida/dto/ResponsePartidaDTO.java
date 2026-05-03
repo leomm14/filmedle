@@ -22,6 +22,8 @@ public class ResponsePartidaDTO {
     public static @NonNull ResponsePartidaDTO toDTO (Partida partida) {
         ResponsePartidaDTO responsePartidaDTO = new ResponsePartidaDTO();
         responsePartidaDTO.setId(partida.getId());
+        responsePartidaDTO.setFilme(partida.getFilme());
+
         if (partida.getPalpites() != null) {
             responsePartidaDTO.setPalpites(partida.getPalpites().stream()
                     .map(ResponsePalpiteDTO::toDTO)

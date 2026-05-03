@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import tuffos.filmedle.dados.filme.Filme;
 import tuffos.filmedle.mecanicas.Partida.dto.ResponsePartidaDTO;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/partida")
 public class PartidaController {
@@ -25,6 +27,6 @@ public class PartidaController {
     }
 
     @GetMapping("/{idPartida}/dica")
-    public String[] dica(@PathVariable Integer idPartida) {return partidaService.dica(idPartida);}
+    public List<String> dica(@PathVariable Integer idPartida) {return partidaService.dica(idPartida);}
 
 }

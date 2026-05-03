@@ -10,6 +10,7 @@ import tuffos.filmedle.mecanicas.Palpite.PalpiteService;
 import tuffos.filmedle.mecanicas.Partida.dto.ResponsePartidaDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PartidaService {
@@ -53,7 +54,7 @@ public class PartidaService {
         return ResponsePartidaDTO.toDTO(partida);
     }
 
-    public String[] dica(Integer id) {
+    public List<String> dica(Integer id) {
         Partida partida = get(id);
 
         if (partida.getPalpites().size() >= 5) {
