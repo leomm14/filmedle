@@ -6,13 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import tuffos.filmedle.dados.Pais.Pais;
 import tuffos.filmedle.mecanicas.Palpite.Palpite;
 import tuffos.filmedle.mecanicas.Partida.Partida;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -37,8 +34,13 @@ public class Filme {
     )
     private List<Pais> paises;
 
-    @Column(nullable = false)
-    private String[] genero;
+    @ElementCollection
+    @CollectionTable(
+            name = "filme_genero",
+            joinColumns = @JoinColumn(name = "filme_id")
+    )
+    @Column(name = "genero", nullable = false)
+    private List<String> genero;
 
     @Column(nullable = false)
     private Integer lancamento;
@@ -46,17 +48,32 @@ public class Filme {
     @Column(nullable = false)
     private Double receita;
 
-    @Column(nullable = false)
-    private String[] produtora;
+    @ElementCollection
+    @CollectionTable(
+            name = "filme_produtora",
+            joinColumns = @JoinColumn(name = "filme_id")
+    )
+    @Column(name = "produtora", nullable = false)
+    private List<String> produtora;
 
-    @Column(nullable = false)
-    private String[] elenco;
+    @ElementCollection
+    @CollectionTable(
+            name = "filme_elenco",
+            joinColumns = @JoinColumn(name = "filme_id")
+    )
+    @Column(name = "elenco", nullable = false)
+    private List<String> elenco;
 
     @Column(nullable = false)
     private String diretor;
 
-    @Column(nullable = false)
-    private String[] keywords;
+    @ElementCollection
+    @CollectionTable(
+            name = "filme_keywords",
+            joinColumns = @JoinColumn(name = "filme_id")
+    )
+    @Column(name = "keyword", nullable = false)
+    private List<String> keywords;
 
     @JsonIgnore
     @OneToMany(mappedBy = "filme")
