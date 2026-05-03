@@ -9,6 +9,8 @@ import tuffos.filmedle.mecanicas.Palpite.Palpite;
 import tuffos.filmedle.mecanicas.Palpite.PalpiteService;
 import tuffos.filmedle.mecanicas.Partida.dto.ResponsePartidaDTO;
 
+import java.util.ArrayList;
+
 @Service
 public class PartidaService {
 
@@ -29,6 +31,13 @@ public class PartidaService {
         partidaRepository.save(partida);
         return ResponsePartidaDTO.toDTO(partida);
 
+    }
+
+    public ResponsePartidaDTO criar(Integer idFilme) {
+        Partida partida = new Partida();
+        partida.setFilme(filmeService.get(idFilme));
+        partida.setPalpites(new ArrayList<>());
+        return ResponsePartidaDTO.toDTO(partidaRepository.save(partida));
     }
 
     public Partida get(Integer id)  {

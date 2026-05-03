@@ -17,6 +17,12 @@ public class PartidaController {
 
     @PostMapping("/{idPartida}/chute/{idChute}")
     public ResponsePartidaDTO chuta(@PathVariable Integer idPartida, @PathVariable Integer idChute) {return partidaService.chute(idPartida, idChute);}
+  
+    // inicializa uma instancia de partida escolhendo o filme a partir do id do filme, alem disso inicia o array de palpites
+    @PostMapping("/criar/{idFilme}")
+    public ResponsePartidaDTO criar(@PathVariable Integer idFilme){
+        return partidaService.criar(idFilme);
+    }
 
     @GetMapping("/{idPartida}/dica")
     public String[] dica(@PathVariable Integer idPartida) {return partidaService.dica(idPartida);}
