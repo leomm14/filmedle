@@ -27,8 +27,10 @@ public class Pais {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
     private String bandeira;
+
+    @Column(nullable = false)
+    private String iso;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "paises")

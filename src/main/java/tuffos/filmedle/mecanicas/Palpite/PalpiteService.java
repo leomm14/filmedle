@@ -6,13 +6,16 @@ import tuffos.filmedle.dados.filme.Filme;
 import tuffos.filmedle.dados.filme.FilmeService;
 import tuffos.filmedle.mecanicas.FeedbackAtributo.Feedback;
 import tuffos.filmedle.mecanicas.Partida.Partida;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class PalpiteService {
 
     @Autowired
     private PalpiteReposity palpiteReposity;
+
     @Autowired
     private FilmeService filmeService;
 
@@ -20,6 +23,7 @@ public class PalpiteService {
         Palpite palpite = new Palpite();
         Filme filmeCorreto = partida.getFilme();
         Filme filmeChute = filmeService.get(idChute);
+
         palpite.setFilme(filmeChute);
         palpite.setPartida(partida);
 
@@ -36,7 +40,6 @@ public class PalpiteService {
         }
 
         return palpiteReposity.save(palpite);
-
     }
 
     public void defineFeedbacks(Filme filmeChute, Filme filmeCorreto, Palpite palpite) {
@@ -46,7 +49,10 @@ public class PalpiteService {
         palpite.setProdutora(feedbackLista(filmeChute.getProdutora(), filmeCorreto.getProdutora()));
         palpite.setElenco(feedbackLista(filmeChute.getElenco(), filmeCorreto.getElenco()));
 
-        palpite.setLancamento(feedbackNumero(filmeChute.getLancamento().doubleValue(), filmeCorreto.getLancamento().doubleValue()));
+        palpite.setLancamento(feedbackNumero(
+                filmeChute.getLancamento().doubleValue(),
+                filmeCorreto.getLancamento().doubleValue()
+        ));
         palpite.setReceita(feedbackNumero(filmeChute.getReceita(), filmeCorreto.getReceita()));
 
         if (filmeChute.getDiretor().equals(filmeCorreto.getDiretor())) {
@@ -56,13 +62,11 @@ public class PalpiteService {
         }
     }
 
-    public Feedback feedbackLista(String[] chute, String[] correto) {
-        List<String> listaChute = Arrays.asList(chute);
-        List<String> listaCorreta = Arrays.asList(correto);
-        if (listaCorreta.size() == listaChute.size() && listaCorreta.containsAll(listaChute)) {
+    public Feedback feedbackLista(List<String> chute, List<String> correto) {
+        if (correto.size() == chute.size() && correto.containsAll(chute)) {
             return Feedback.CORRETO;
         }
-        if (Collections.disjoint(listaCorreta, listaChute)) {
+        if (Collections.disjoint(correto, chute)) {
             return Feedback.ERRADO;
         }
         return Feedback.PARCIAL;
@@ -75,7 +79,6 @@ public class PalpiteService {
         if (chute < correto) {
             return Feedback.SETA_CIMA;
         }
-        return  Feedback.SETA_BAIXO;
+        return Feedback.SETA_BAIXO;
     }
-
 }
