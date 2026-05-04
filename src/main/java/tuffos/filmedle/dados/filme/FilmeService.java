@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import tuffos.filmedle.dados.filme.dto.FilmeBuscaDTO;
 import tuffos.filmedle.dados.filme.dto.ResponseFilmeDTO;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -27,5 +29,12 @@ public class FilmeService {
 
         return filmeRepository.findById(idSorteado)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado com ID: " + idSorteado));
+    }
+
+    public List<FilmeBuscaDTO> getTodosFilmesParaBusca() {
+        return filmeRepository.findAll()
+                .stream()
+                .map(FilmeBuscaDTO::fromEntity)
+                .toList();
     }
 }
