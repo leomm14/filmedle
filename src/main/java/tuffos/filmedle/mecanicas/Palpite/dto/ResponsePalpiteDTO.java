@@ -12,7 +12,8 @@ import tuffos.filmedle.mecanicas.Palpite.Palpite;
 public class ResponsePalpiteDTO {
     private Integer id;
     private Filme filme;
-    private Feedback paises;
+    private Boolean correto;
+    private Feedback pais;
     private Feedback genero;
     private Feedback lancamento;
     private Feedback receita;
@@ -24,6 +25,8 @@ public class ResponsePalpiteDTO {
         ResponsePalpiteDTO responsePalpiteDTO = new ResponsePalpiteDTO();
         responsePalpiteDTO.setId(palpite.getId());
         responsePalpiteDTO.setFilme(palpite.getFilme());
+        responsePalpiteDTO.setCorreto(palpite.getCorreto());
+        responsePalpiteDTO.setPais(palpite.getPais());
         responsePalpiteDTO.setGenero(palpite.getGenero());
         responsePalpiteDTO.setLancamento(palpite.getLancamento());
         responsePalpiteDTO.setReceita(palpite.getReceita());

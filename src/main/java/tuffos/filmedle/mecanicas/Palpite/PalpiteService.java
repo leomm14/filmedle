@@ -2,6 +2,7 @@ package tuffos.filmedle.mecanicas.Palpite;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tuffos.filmedle.dados.Pais.Pais;
 import tuffos.filmedle.dados.filme.Filme;
 import tuffos.filmedle.dados.filme.FilmeService;
 import tuffos.filmedle.mecanicas.FeedbackAtributo.Feedback;
@@ -29,6 +30,7 @@ public class PalpiteService {
 
         if (idChute.equals(filmeCorreto.getId())) {
             palpite.setCorreto(true);
+            palpite.setPais(Feedback.CORRETO);
             palpite.setGenero(Feedback.CORRETO);
             palpite.setLancamento(Feedback.CORRETO);
             palpite.setReceita(Feedback.CORRETO);
@@ -54,6 +56,10 @@ public class PalpiteService {
                 filmeCorreto.getLancamento().doubleValue()
         ));
         palpite.setReceita(feedbackNumero(filmeChute.getReceita(), filmeCorreto.getReceita()));
+
+        List<String> nomesPaisesChute = filmeChute.getPaises().stream().map(Pais::getNome).toList();
+        List<String> nomesPaisesCorreto = filmeCorreto.getPaises().stream().map(Pais::getNome).toList();
+        palpite.setPais(feedbackLista(nomesPaisesChute, nomesPaisesCorreto));
 
         if (filmeChute.getDiretor().equals(filmeCorreto.getDiretor())) {
             palpite.setDiretor(Feedback.CORRETO);

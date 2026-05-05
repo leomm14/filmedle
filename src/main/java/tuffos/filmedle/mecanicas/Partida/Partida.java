@@ -29,6 +29,9 @@ public class Partida {
     @JoinColumn(name = "id_filme", nullable = false)
     private Filme filme;
 
+    @Column(nullable = false)
+    private Boolean terminou = false;
+
     @OneToMany(mappedBy = "partida")
     private List<Palpite> palpites= new ArrayList<>();
 

@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import tuffos.filmedle.dados.filme.dto.FilmeBuscaDTO;
-import tuffos.filmedle.dados.filme.dto.ResponseFilmeDTO;
+import tuffos.filmedle.dados.filme.dto.ResponseFilmeFiltroDTO;
 
 import java.util.List;
 import java.util.Random;
@@ -20,21 +19,18 @@ public class FilmeService {
         return filmeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado"));
     }
-    public ResponseFilmeDTO getDTO(Integer id) {return ResponseFilmeDTO.toDTO(get(id));}
 
-    public Filme getAleatorio() {
-        long totalFilmes = filmeRepository.count();
-
-        int idSorteado = new Random().nextInt((int) totalFilmes) + 1;
-
-        return filmeRepository.findById(idSorteado)
+    public Filme getFilmePorSeed(long seed) {
+        Random random = new Random(seed);
+        int idSorteado = random.nextInt((int) filmeRepository.count()) + 1;
+        return  filmeRepository.findById(idSorteado)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Filme não encontrado com ID: " + idSorteado));
     }
 
-    public List<FilmeBuscaDTO> getTodosFilmesParaBusca() {
+    public List<ResponseFilmeFiltroDTO> getTodosFilmesParaBusca() {
         return filmeRepository.findAll()
                 .stream()
-                .map(FilmeBuscaDTO::fromEntity)
+                .map(ResponseFilmeFiltroDTO::toDTO)
                 .toList();
     }
 }

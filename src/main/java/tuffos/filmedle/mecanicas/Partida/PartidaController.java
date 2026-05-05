@@ -2,7 +2,7 @@ package tuffos.filmedle.mecanicas.Partida;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tuffos.filmedle.dados.filme.Filme;
+import tuffos.filmedle.dados.filme.dto.ResponseFilmeDTO;
 import tuffos.filmedle.mecanicas.Partida.dto.ResponsePartidaDTO;
 
 import java.util.List;
@@ -15,18 +15,15 @@ public class PartidaController {
     private PartidaService partidaService;
 
     @PostMapping("/inicia")
-    public ResponsePartidaDTO inicia() {return partidaService.inicia();}
+    public ResponsePartidaDTO inicia(@RequestParam(defaultValue = "infinito") String modo) {return partidaService.inicia(modo);}
 
     @PostMapping("/{idPartida}/chute/{idChute}")
     public ResponsePartidaDTO chuta(@PathVariable Integer idPartida, @PathVariable Integer idChute) {return partidaService.chute(idPartida, idChute);}
-  
-    // inicializa uma instancia de partida escolhendo o filme a partir do id do filme, alem disso inicia o array de palpites
-    @PostMapping("/criar/{idFilme}")
-    public ResponsePartidaDTO criar(@PathVariable Integer idFilme){
-        return partidaService.criar(idFilme);
-    }
 
     @GetMapping("/{idPartida}/dica")
     public List<String> dica(@PathVariable Integer idPartida) {return partidaService.dica(idPartida);}
+
+    @GetMapping("/{idPartida}/desistir")
+    public ResponseFilmeDTO desistir(@PathVariable Integer idPartida) {return partidaService.desistir(idPartida);}
 
 }
