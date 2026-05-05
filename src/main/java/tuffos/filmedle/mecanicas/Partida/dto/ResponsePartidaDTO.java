@@ -16,20 +16,20 @@ import java.util.stream.Collectors;
 public class ResponsePartidaDTO {
 
     private Integer id;
-    private Filme filme;
     private List<ResponsePalpiteDTO> palpites;
 
-    public static @NonNull ResponsePartidaDTO toDTO (Partida partida) {
-        ResponsePartidaDTO responsePartidaDTO = new ResponsePartidaDTO();
-        responsePartidaDTO.setId(partida.getId());
-        responsePartidaDTO.setFilme(partida.getFilme());
+    public static @NonNull ResponsePartidaDTO toDTO(Partida partida) {
+        ResponsePartidaDTO dto = new ResponsePartidaDTO();
+        dto.setId(partida.getId());
 
         if (partida.getPalpites() != null) {
-            responsePartidaDTO.setPalpites(partida.getPalpites().stream()
-                    .map(ResponsePalpiteDTO::toDTO)
-                    .collect(Collectors.toList()));
+            dto.setPalpites(
+                    partida.getPalpites().stream()
+                            .map(ResponsePalpiteDTO::toDTO)
+                            .collect(Collectors.toList())
+            );
         }
 
-        return responsePartidaDTO;
+        return dto;
     }
 }
